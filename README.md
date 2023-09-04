@@ -49,7 +49,7 @@ Es importante adaptar este modelo a la base de datos específica que se esté ut
 
 # Endpoints
 
-La app se desplego en AWS con el servicio Elastic Beanstalk, tambien se creo la base de datos en AWS, para probar puede usar POSTMAN y usar los endpoints
+La app se desplego en AWS con el servicio Elastic Beanstalk, tambien se creo la base de datos postgresql en aws, para probar puede usar POSTMAN y usar los endpoints
 
 API : http://api-cards-env.eba-ufg3rjqa.us-east-1.elasticbeanstalk.com/
 ### 1. Generar número de tarjeta
