@@ -15,8 +15,8 @@ public class CardServiceImpl implements  CardService{
     CardRepository cardRepository;
 
     public HandleResponse generateCardNumber(Long productId) {
-            var optionalTicket = cardRepository.findById(productId);
-            if( optionalTicket.isEmpty()) return new HandleResponse("Not found Card", 404);
+            /*var optionalTicket = cardRepository.findById(productId);
+            if( optionalTicket.isEmpty()) return new HandleResponse("Not found Card", 404);*/
             Random random = new Random();
             String productIdStr = String.valueOf(productId);
             int longitud = Math.min(productIdStr.length(), 6);
