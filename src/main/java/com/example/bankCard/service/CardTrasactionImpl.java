@@ -1,6 +1,5 @@
 package com.example.bankCard.service;
 
-import com.example.bankCard.handleResponse.HandleResponse;
 import com.example.bankCard.handleResponse.HandleResponseTransaction;
 import com.example.bankCard.model.Card;
 import com.example.bankCard.model.Transaction;
@@ -8,8 +7,6 @@ import com.example.bankCard.repository.CardRepository;
 import com.example.bankCard.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -25,7 +22,7 @@ public class CardTrasactionImpl implements CardTransaction{
         if(card == null) return new HandleResponseTransaction("Card not found", 404, null);
         if(!card.isActive()) return new HandleResponseTransaction("The card is not already active", 200,null);
         if(card.isBlocked()) return new HandleResponseTransaction("The card its Blocked", 200, null);
-        if(card.getBalance()< Price) return new HandleResponseTransaction("You don't have enough balance", 200,null);;
+        if(card.getBalance()< Price) return new HandleResponseTransaction("You don't have enough balance", 200,null);
 
         Transaction transaction = new Transaction();
         transaction.setCardNumber(CardId);
