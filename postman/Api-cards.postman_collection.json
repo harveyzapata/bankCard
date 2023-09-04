@@ -1,0 +1,248 @@
+{
+	"info": {
+		"_postman_id": "6b3a2035-cacf-419b-b017-123666bdb57a",
+		"name": "Api-cards",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18239478"
+	},
+	"item": [
+		{
+			"name": "Generar número de tarjeta",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://api-cards-env.eba-ufg3rjqa.us-east-1.elasticbeanstalk.com/card/100/number",
+					"protocol": "http",
+					"host": [
+						"api-cards-env",
+						"eba-ufg3rjqa",
+						"us-east-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"card",
+						"100",
+						"number"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Activar tarjeta",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cardId\": \"0000017331181644\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://api-bankinc-card-env.eba-ebupvs3y.us-east-2.elasticbeanstalk.com/card/enroll",
+					"protocol": "http",
+					"host": [
+						"api-bankinc-card-env",
+						"eba-ebupvs3y",
+						"us-east-2",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"card",
+						"enroll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bloquear tarjeta",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cardId\": \"0000017331181644\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://api-bankinc-card-env.eba-ebupvs3y.us-east-2.elasticbeanstalk.com/card/1",
+					"protocol": "http",
+					"host": [
+						"api-bankinc-card-env",
+						"eba-ebupvs3y",
+						"us-east-2",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"card",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recargar saldo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cardId\": \"0000019427375948\",\n    \"balance\": \"5000000\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://api-bankinc-card-env.eba-ebupvs3y.us-east-2.elasticbeanstalk.com/card/balance",
+					"protocol": "http",
+					"host": [
+						"api-bankinc-card-env",
+						"eba-ebupvs3y",
+						"us-east-2",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"card",
+						"balance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consulta de saldo",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://api-bankinc-card-env.eba-ebupvs3y.us-east-2.elasticbeanstalk.com/card/balance/0000019427375948",
+					"protocol": "http",
+					"host": [
+						"api-bankinc-card-env",
+						"eba-ebupvs3y",
+						"us-east-2",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"card",
+						"balance",
+						"0000019427375948"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transacción de compra",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"cardId\": \"1234567890123456\",\n\"price\": 1000000.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://api-bankinc-card-env.eba-ebupvs3y.us-east-2.elasticbeanstalk.com/transaction/purchase",
+					"protocol": "http",
+					"host": [
+						"api-bankinc-card-env",
+						"eba-ebupvs3y",
+						"us-east-2",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"transaction",
+						"purchase"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar transacción",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://api-bankinc-card-env.eba-ebupvs3y.us-east-2.elasticbeanstalk.com/transaction/133",
+					"protocol": "http",
+					"host": [
+						"api-bankinc-card-env",
+						"eba-ebupvs3y",
+						"us-east-2",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"transaction",
+						"133"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Anular Transacción",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"cardId\": \"1234567890123456\",\n\"transactionId\": \"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://api-bankinc-card-env.eba-ebupvs3y.us-east-2.elasticbeanstalk.com/transaction/anulation",
+					"protocol": "http",
+					"host": [
+						"api-bankinc-card-env",
+						"eba-ebupvs3y",
+						"us-east-2",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"transaction",
+						"anulation"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
