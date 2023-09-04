@@ -117,11 +117,11 @@ class CardServiceTest {
         when(cardRepository.findByCardId("1234567890123456")).thenReturn(card);
         // Ejecutar el método que deseas probar
         HandleResponse response = cardService.AddBalance("1234567890123456", 500.0);
-        // Verificar que se haya llamado a cardRepository.save(card)
-        verify(cardRepository, times(1)).save(card);
+
         // Verificar el resultado de la respuesta
         assertEquals("Added balance successfully", response.getMessage());
         assertEquals(200, response.getCode());
+        assertEquals(1500,response.getCard().getBalance());
 
     }
 
