@@ -97,8 +97,8 @@ public class CardServiceImpl implements  CardService{
             sum += digit;
             doubleDigit = !doubleDigit;
         }
-        int luhnDigit = (10 - (sum % 10)) % 10;
-        return luhnDigit;
+
+        return (10 - (sum % 10)) % 10;
     }
 
 
