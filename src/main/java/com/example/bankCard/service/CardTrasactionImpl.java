@@ -22,22 +22,11 @@ public class CardTrasactionImpl implements CardTransaction{
      TransactionRepository transactionRepository;
     public HandleResponseTransaction Purchase(String CardId, double Price ){
         Card card = cardRepository.findByCardId(CardId);
-        if(card == null){
-            HandleResponseTransaction notFoundResponse = new HandleResponseTransaction("Card not found", 404, null);
-            return notFoundResponse;
-        }
-        if(!card.isActive()){
-            HandleResponseTransaction response = new HandleResponseTransaction("The card is not already active", 200,null);
-            return response;
-        }
-        if(card.isBlocked()){
-            HandleResponseTransaction response = new HandleResponseTransaction("The card its Blocked", 200, null);
-            return response;
-        }
-        if(card.getBalance()< Price){
-            HandleResponseTransaction response = new HandleResponseTransaction("You don't have enough balance", 200,null);
-            return response;
-        }
+        if(card == null) return new HandleResponseTransaction("Card not found", 404, null);
+        if(!card.isActive()) return new HandleResponseTransaction("The card is not already active", 200,null);
+        if(card.isBlocked()) return new HandleResponseTransaction("The card its Blocked", 200, null);
+        if(card.getBalance()< Price) return new HandleResponseTransaction("You don't have enough balance", 200,null);;
+
         Transaction transaction = new Transaction();
         transaction.setCardNumber(CardId);
         transaction.setPrice(Price);
@@ -50,47 +39,40 @@ public class CardTrasactionImpl implements CardTransaction{
             transactionRepository.save(transaction);
         }
 
-        HandleResponseTransaction response = new HandleResponseTransaction("Purchase successfully", 200, transaction);
-        return response;
+        return new HandleResponseTransaction("Purchase successfully", 200, transaction);
     }
 
     public HandleResponseTransaction GetTransaction(Long transactionId){
         var optionalTransaction = transactionRepository.findById(transactionId);
-        if( optionalTransaction.isEmpty()){
-            HandleResponseTransaction notFoundResponse = new HandleResponseTransaction("Not found Transaction", 404);
-            return notFoundResponse;
-        }
+        if( optionalTransaction.isEmpty()) return new HandleResponseTransaction("Not found Transaction", 404);
+
         Transaction transaction = optionalTransaction.get();
-        HandleResponseTransaction response = new HandleResponseTransaction("The information is", 200, transaction);
-        return response;
+
+        return new HandleResponseTransaction("The information is", 200, transaction);
 
     }
 
     public HandleResponseTransaction CancelTransaction(String CardId, Long Id){
         var optransaction = transactionRepository.findById(Id);
-        if(optransaction.isEmpty()){
-            HandleResponseTransaction notFoundResponse = new HandleResponseTransaction("Transaction not found ", 404);
-            return notFoundResponse;
-        }
+
+        if(optransaction.isEmpty()) return new HandleResponseTransaction("Transaction not found ", 404);
+
         Transaction transaction = optransaction.get();
         LocalDateTime now = LocalDateTime.now();
         long hoursDifference = ChronoUnit.HOURS.between(transaction.getTransactionDate(), now);
-        if(hoursDifference>24){
-            HandleResponseTransaction response = new HandleResponseTransaction("The transaction cannot be canceled and more than 24 hours have passed", 200, null);
-            return response;
-        }
+
+        if(hoursDifference>24) return new HandleResponseTransaction("The transaction cannot be canceled and more than 24 hours have passed", 200, null);
+
         Card card = cardRepository.findByCardId(CardId);
-        if(card == null){
-            HandleResponseTransaction notFoundResponse = new HandleResponseTransaction("Card not found", 404, null);
-            return notFoundResponse;
-        }
+        if(card == null) return new HandleResponseTransaction("Card not found", 404, null);
+
         Double newBalance = card.getBalance() + transaction.getPrice();
         card.setBalance(newBalance);
         transaction.setCanceled(true);
         cardRepository.save(card);
         transactionRepository.save(transaction);
-        HandleResponseTransaction response = new HandleResponseTransaction("Transaction canceled", 200, transaction);
-        return response;
+
+        return new HandleResponseTransaction("Transaction canceled", 200, transaction);
     }
 
 

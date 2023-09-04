@@ -1,12 +1,8 @@
 package com.example.bankCard.controller;
-
-import com.example.bankCard.handleResponse.HandleResponse;
 import com.example.bankCard.handleResponse.HandleResponseTransaction;
-import com.example.bankCard.model.Transaction;
 import com.example.bankCard.service.CardTransaction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Map;
 
 @RestController
@@ -25,7 +21,6 @@ public class TransactionController {
         return ResponseEntity.status(transaction.getCode()).body(transaction);
 
     }
-
     @PostMapping("/purchase")
     public ResponseEntity<Object> PurchaseTransaction(@RequestBody Map<String, Object> requestMap) {
         String cardId = (String) requestMap.get("cardId");
@@ -42,8 +37,5 @@ public class TransactionController {
         HandleResponseTransaction response = cardTransaction.CancelTransaction(cardId, transactionId);
         return ResponseEntity.status(response.getCode()).body(response);
     }
-
-
-
 
 }

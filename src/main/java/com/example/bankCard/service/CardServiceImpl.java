@@ -1,15 +1,10 @@
 package com.example.bankCard.service;
 
-
-
 import com.example.bankCard.handleResponse.HandleResponse;
-import com.example.bankCard.handleResponse.HandleResponseTransaction;
 import com.example.bankCard.model.Card;
-import com.example.bankCard.model.Transaction;
 import com.example.bankCard.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.Random;
 
@@ -19,14 +14,9 @@ public class CardServiceImpl implements  CardService{
     @Autowired
     CardRepository cardRepository;
 
-
-
     public HandleResponse generateCardNumber(Long productId) {
             var optionalTicket = cardRepository.findById(productId);
-            if( optionalTicket.isEmpty()){
-                HandleResponse notFoundResponse = new HandleResponse("Not found Card", 404);
-                return notFoundResponse;
-            }
+            if( optionalTicket.isEmpty()) return new HandleResponse("Not found Card", 404);
             Random random = new Random();
             String productIdStr = String.valueOf(productId);
             int longitud = Math.min(productIdStr.length(), 6);
@@ -49,70 +39,46 @@ public class CardServiceImpl implements  CardService{
             card.setBalance(0);
             card.setBlocked(false);
             cardRepository.save(card);
-            HandleResponse response = new HandleResponse("Card number generate successfully",200, card);
-            return response;
+
+            return new HandleResponse("Card number generate successfully",200, card);
     }
 
     public HandleResponse ActiveCard(String cardId) {
         Card optionalCard = cardRepository.findByCardId(cardId);
-        if(optionalCard == null){
-            HandleResponse notFoundResponse = new HandleResponse("Not found Card", 404, null);
-            return notFoundResponse;
-        }
-        if(optionalCard.isActive()){
-            HandleResponse response = new HandleResponse("The card is already active", 200);
-            return response;
-        }
+        if(optionalCard == null) return new HandleResponse("Not found Card", 404, null);;
+        if(optionalCard.isActive()) return new HandleResponse("The card is already active", 200);;
         optionalCard.setActive(true);
         cardRepository.save(optionalCard);
-        HandleResponse response = new HandleResponse("Card was activate successfully",200, optionalCard);
-        return response;
+
+        return new HandleResponse("Card was activate successfully",200, optionalCard);
     }
 
     public HandleResponse BlockCard(String cardId){
         Card card = cardRepository.findByCardId(cardId);
-        if(card == null){
-            HandleResponse notFoundResponse = new HandleResponse("Not found", 404, null);
-            return notFoundResponse;
-        }
+        if(card == null) return new HandleResponse("Not found", 404, null);;
         card.setBlocked(true);
         cardRepository.save(card);
-        HandleResponse response = new HandleResponse("Card Blocked successfully", 200,card);
-        return response;
+
+        return new HandleResponse("Card Blocked successfully", 200,card);
     }
 
     public HandleResponse AddBalance(String cardId, double balance){
         Card card = cardRepository.findByCardId(cardId);
-        if(card == null){
-            HandleResponse notFoundResponse = new HandleResponse("Not found", 404, null);
-            return notFoundResponse;
-        }
-        if(!card.isActive()){
-            HandleResponse response = new HandleResponse("The card is not already active", 200);
-            return response;
-        }
-        if(card.isBlocked()){
-            HandleResponse response = new HandleResponse("The card its Blocked", 200);
-            return response;
-        }
+        if(card == null) return new HandleResponse("Not found", 404, null);;
+        if(!card.isActive()) return new HandleResponse("The card is not already active", 200);;
+        if(card.isBlocked()) return new HandleResponse("The card its Blocked", 200);;
         card.setBalance(balance);
         cardRepository.save(card);
-        HandleResponse response = new HandleResponse("Added balance successfully", 200,card);
-        return response;
+
+        return new HandleResponse("Added balance successfully", 200,card);
     }
 
     public HandleResponse GetBalance(String CardId){
         Card card = cardRepository.findByCardId(CardId);
-        if(card == null){
-            HandleResponse notFoundResponse = new HandleResponse("Not found", 404, null);
-            return notFoundResponse;
-        }
-        if(card.isBlocked()){
-            HandleResponse response = new HandleResponse("The card its Blocked", 200, null);
-            return response;
-        }
-        HandleResponse response = new HandleResponse("Added balance successfully", 200, card);
-        return response;
+        if(card == null) return new HandleResponse("Not found", 404, null);
+        if(card.isBlocked()) return new HandleResponse("The card its Blocked", 200, null);
+
+        return new HandleResponse("Added balance successfully", 200, card);
     }
 
     private static int calculateLuhnDigit(String cardNumber) {
