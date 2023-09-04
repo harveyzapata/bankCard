@@ -67,7 +67,9 @@ public class CardServiceImpl implements  CardService{
         if(card == null) return new HandleResponse("Not found", 404, null);
         if(!card.isActive()) return new HandleResponse("The card is not already active", 200);
         if(card.isBlocked()) return new HandleResponse("The card its Blocked", 200);
-        card.setBalance(balance);
+        if(balance >= 0) return new HandleResponse("Balance must be positive", 400);
+
+        card.setBalance(balance + card.getBalance());
         cardRepository.save(card);
 
         return new HandleResponse("Added balance successfully", 200,card);
