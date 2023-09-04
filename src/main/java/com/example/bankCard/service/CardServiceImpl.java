@@ -45,8 +45,8 @@ public class CardServiceImpl implements  CardService{
 
     public HandleResponse ActiveCard(String cardId) {
         Card optionalCard = cardRepository.findByCardId(cardId);
-        if(optionalCard == null) return new HandleResponse("Not found Card", 404, null);;
-        if(optionalCard.isActive()) return new HandleResponse("The card is already active", 200);;
+        if(optionalCard == null) return new HandleResponse("Not found Card", 404, null);
+        if(optionalCard.isActive()) return new HandleResponse("The card is already active", 200);
         optionalCard.setActive(true);
         cardRepository.save(optionalCard);
 
@@ -55,7 +55,7 @@ public class CardServiceImpl implements  CardService{
 
     public HandleResponse BlockCard(String cardId){
         Card card = cardRepository.findByCardId(cardId);
-        if(card == null) return new HandleResponse("Not found", 404, null);;
+        if(card == null) return new HandleResponse("Not found", 404, null);
         card.setBlocked(true);
         cardRepository.save(card);
 
@@ -64,9 +64,9 @@ public class CardServiceImpl implements  CardService{
 
     public HandleResponse AddBalance(String cardId, double balance){
         Card card = cardRepository.findByCardId(cardId);
-        if(card == null) return new HandleResponse("Not found", 404, null);;
-        if(!card.isActive()) return new HandleResponse("The card is not already active", 200);;
-        if(card.isBlocked()) return new HandleResponse("The card its Blocked", 200);;
+        if(card == null) return new HandleResponse("Not found", 404, null);
+        if(!card.isActive()) return new HandleResponse("The card is not already active", 200);
+        if(card.isBlocked()) return new HandleResponse("The card its Blocked", 200);
         card.setBalance(balance);
         cardRepository.save(card);
 

@@ -29,7 +29,7 @@ public class CardTrasactionImpl implements CardTransaction{
         transaction.setPrice(Price);
         transaction.setTransactionDate(LocalDateTime.now());
 
-        Double newBalance = card.getBalance() - Price;
+        double newBalance = card.getBalance() - Price;
         if (newBalance >= 0) {
             card.setBalance(newBalance);
             cardRepository.save(card);
@@ -63,7 +63,7 @@ public class CardTrasactionImpl implements CardTransaction{
         Card card = cardRepository.findByCardId(CardId);
         if(card == null) return new HandleResponseTransaction("Card not found", 404, null);
 
-        Double newBalance = card.getBalance() + transaction.getPrice();
+        double newBalance = card.getBalance() + transaction.getPrice();
         card.setBalance(newBalance);
         transaction.setCanceled(true);
         cardRepository.save(card);
